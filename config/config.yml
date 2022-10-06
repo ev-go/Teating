@@ -1,17 +1,33 @@
 app:
-  name: 'go-clean-template'
-  version: '1.0.0'
-
+  name: 'customer-administration'
+  environment: develop
+log:
+  level: 'debug'
+pg:
+  rsid: 1
+  #database_url: 'postgres://postgres:123@10.139.133.23:5432/postgres'
+  database_url: 'postgres://postgres:123@localhost:5432/postgres'
+  source_url: '/migrations:public'
+  pool_max: 5
+trace:
+  url: 'http://10.1.11.126:14268/api/traces'
+  level: 4
 http:
-  port: '8080'
+  url: '127.0.0.1'
+  port: '3002'
 
-logger:
-  log_level: 'debug'
-  rollbar_env: 'go-clean-template'
+acl:
+  url: 'https://acladmin.boquar.tech'
+  #url: 'http://localhost:8089'
+  swagger_paths: "./docs/swagger.json"
+  #url: 'http://10.1.11.19:8089'
 
-postgres:
-  pool_max: 2
+grpc:
+  port: ':50052'
 
-rabbitmq:
-  rpc_server_exchange: 'rpc_server'
-  rpc_client_exchange: 'rpc_client'
+keycloak:
+  url: 'https://tpm-keycloak.boquar.tech'
+  clientid: 'aclAdmin'
+  username: 'tyulkin.d'
+  clientsecret: '54321'
+  realm: 'GS'
