@@ -1,31 +1,30 @@
-// Package v1 implements routing paths. Each services in own file.
 package v1
 
 import (
+	"github.com/VictoriaMetrics/metrics"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/controller/http/middleware"
+	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/usecase"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
-
-	// Swagger docs.
-	_ "github.com/evrone/go-clean-template/docs"
-	"github.com/evrone/go-clean-template/internal/usecase"
-	"github.com/evrone/go-clean-template/pkg/logger"
 )
 
-// NewRouter -.
-// Swagger spec:
-// @title       Go Clean Template API
-// @description Using a translation service as an example
-// @version     1.0
-// @host        localhost:8080
-// @BasePath    /v1
-func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
+// @title           GS Customer Administration API
+// @version         1.0.0
+// @description     customer-administration
+// @termsOfService  http://swagger.io/terms/
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+// @host      localhost
+
+// @securityDefinitions.basic  BasicAuth
+func NewRouter(handler *gin.Engine, c usecase.ICustomer, g usecase.IGroup, u usecase.IUser) {
 	// Options
-	handler.Use(gin.Logger())
-	handler.Use(gin.Recovery())
 
 	// Swagger
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
@@ -35,11 +34,26 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
 	handler.GET("/healthz", func(c *gin.Context) { c.Status(http.StatusOK) })
 
 	// Prometheus metrics
-	handler.GET("/metrics", gin.WrapH(promhttp.Handler()))
+	handler.Any("/metrics", func(c *gin.Context) { metrics.WritePrometheus(c.Writer, true) })
+
+	handler.Use(
+		//middleware.CORSMiddleware(),
+		middleware.ACLMiddleware,
+		middleware.TracerMiddleware,
+		middleware.MetricsMiddleware,
+		middleware.LoggerMiddleware,
+		gin.CustomRecovery(middleware.RecoveryMiddleware),
+	)
 
 	// Routers
-	h := handler.Group("/v1")
+	hCustomer := handler.Group("/customer")
+	hGroup := handler.Group("/group")
+	hUser := handler.Group("/user")
+	hAdminUser := handler.Group("/admin/user")
 	{
-		newTranslationRoutes(h, t, l)
+		newCustomerRoutes(hCustomer, c)
+		newGroupRoutes(hGroup, g)
+		newUserRoutes(hUser, u)
+		newAdminUserRoutes(hAdminUser, u)
 	}
 }

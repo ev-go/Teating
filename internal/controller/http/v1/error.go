@@ -11,3 +11,12 @@ type response struct {
 func errorResponse(c *gin.Context, code int, msg string) {
 	c.AbortWithStatusJSON(code, response{msg})
 }
+
+func respondWithError(c *gin.Context, code int, err error) {
+	c.AbortWithStatusJSON(code, errorResp{err.Error()})
+	c.Error(err)
+}
+
+type errorResp struct {
+	Error string `json:"error"`
+}

@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package grpcserver;
+
+option go_package = "./grpcserver";
+
+service customer {
+  rpc GetApiKey(GetApiKeyRequest) returns (GetApiKeyResponse) {}
+  rpc SetApiKey(SetApiKeyRequest) returns (SetApiKeyResponse) {}
+  rpc GetCustomerUUIDByUserName(GetCustomerUUIDByUserNameRequest) returns (GetCustomerUUIDByUserNameResponse) {}
+}
+
+message GetApiKeyRequest{
+  string customer_id = 1;
+}
+
+message GetApiKeyResponse{
+  string apikey = 1;
+}
+
+message SetApiKeyRequest{
+  string customer_id = 1;
+  string apikey = 2;
+}
+
+message SetApiKeyResponse{
+  string apikey = 1;
+}
+
+message GetCustomerUUIDByUserNameRequest{
+  string user_name = 1;
+}
+
+message GetCustomerUUIDByUserNameResponse{
+  string customer_uuid = 1;
+}
+
