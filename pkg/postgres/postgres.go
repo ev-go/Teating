@@ -1,4 +1,3 @@
-// Package postgres implements postgres connection.
 package postgres
 
 import (
@@ -8,7 +7,12 @@ import (
 	"time"
 
 	"github.com/Masterminds/squirrel"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jackc/pgx/v4/pgxpool"
+	_ "github.com/lib/pq"
 )
 
 const (
@@ -17,7 +21,6 @@ const (
 	_defaultConnTimeout  = time.Second
 )
 
-// Postgres -.
 type Postgres struct {
 	maxPoolSize  int
 	connAttempts int
@@ -27,7 +30,6 @@ type Postgres struct {
 	Pool    *pgxpool.Pool
 }
 
-// New -.
 func New(url string, opts ...Option) (*Postgres, error) {
 	pg := &Postgres{
 		maxPoolSize:  _defaultMaxPoolSize,
@@ -35,7 +37,6 @@ func New(url string, opts ...Option) (*Postgres, error) {
 		connTimeout:  _defaultConnTimeout,
 	}
 
-	// Custom options
 	for _, opt := range opts {
 		opt(pg)
 	}
@@ -48,13 +49,11 @@ func New(url string, opts ...Option) (*Postgres, error) {
 	}
 
 	poolConfig.MaxConns = int32(pg.maxPoolSize)
-
 	for pg.connAttempts > 0 {
 		pg.Pool, err = pgxpool.ConnectConfig(context.Background(), poolConfig)
 		if err == nil {
 			break
 		}
-
 		log.Printf("Postgres is trying to connect, attempts left: %d", pg.connAttempts)
 
 		time.Sleep(pg.connTimeout)
@@ -69,9 +68,25 @@ func New(url string, opts ...Option) (*Postgres, error) {
 	return pg, nil
 }
 
-// Close -.
 func (p *Postgres) Close() {
 	if p.Pool != nil {
 		p.Pool.Close()
 	}
+}
+
+func Migrate(sourceURL, databaseURL string) error {
+	m, err := migrate.New(
+		sourceURL,
+		databaseURL,
+	)
+	if err != nil {
+		return fmt.Errorf("migration error: %w", err)
+	}
+	defer m.Close()
+
+	if err = m.Up(); err != nil {
+		return fmt.Errorf("migration error: %w", err)
+	}
+
+	return nil
 }
