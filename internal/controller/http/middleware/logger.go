@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"github.com/ev-go/Testing/pkg/logger"
 	"github.com/gin-gonic/gin"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/logger"
 )
 
 func LoggerMiddleware(c *gin.Context) {

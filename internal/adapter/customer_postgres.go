@@ -5,12 +5,12 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/squirrel"
+	customerRequest "github.com/ev-go/Testing/internal/entity/customer/request"
+	"github.com/ev-go/Testing/internal/entity/customer/response"
 	"github.com/jackc/pgx/v4"
-	customerRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/request"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/response"
 
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/postgres"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
+	"github.com/ev-go/Testing/pkg/postgres"
+	"github.com/ev-go/Testing/pkg/tracer"
 )
 
 type CustomerRepoImpl struct {

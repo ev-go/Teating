@@ -3,16 +3,16 @@ package adapter
 import (
 	"context"
 	"fmt"
-	customerRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/request"
-	groupRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/group/request"
-	entity "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user"
+	"github.com/Nerzal/gocloak/v11"
+	customerRequest "github.com/ev-go/Testing/internal/entity/customer/request"
+	groupRequest "github.com/ev-go/Testing/internal/entity/group/request"
+	entity "github.com/ev-go/Testing/internal/entity/user"
 	"net/http"
 	"time"
 
-	"github.com/Nerzal/gocloak/v11"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/config"
-	userRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/request"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
+	"github.com/ev-go/Testing/config"
+	userRequest "github.com/ev-go/Testing/internal/entity/user/request"
+	"github.com/ev-go/Testing/pkg/tracer"
 )
 
 const defaultTimeout = 1

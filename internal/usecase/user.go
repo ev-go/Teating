@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 	"fmt"
-	entity "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user"
-	userRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/request"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
+	entity "github.com/ev-go/Testing/internal/entity/user"
+	userRequest "github.com/ev-go/Testing/internal/entity/user/request"
+	"github.com/ev-go/Testing/pkg/tracer"
 	"gitlab.boquar.tech/galileosky/pkg/acl"
 )
 

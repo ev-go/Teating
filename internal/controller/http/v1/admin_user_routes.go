@@ -1,14 +1,13 @@
 package v1
 
 import (
-	"fmt"
-	userRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/request"
-	"gitlab.boquar.tech/galileosky/pkg/acl"
+	//"gitlab.boquar.tech/galileosky/pkg/acl"
+	userRequest "github.com/ev-go/Testing/internal/entity/user/request"
 	"net/http"
 
+	uResp "github.com/ev-go/Testing/internal/entity/user/admin/response"
+	"github.com/ev-go/Testing/internal/usecase"
 	"github.com/gin-gonic/gin"
-	uResp "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/admin/response"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/usecase"
 )
 
 type adminUserRoutes struct {
@@ -39,11 +38,11 @@ func newAdminUserRoutes(handler *gin.RouterGroup, uc usecase.IUser) {
 // @failure      400	          {string}  string    "error"
 // @Router /admin/user/list [GET]
 func (r *adminUserRoutes) GetUserList(c *gin.Context) {
-	isAdmin := c.Request.Context().Value(acl.CtxNameTokenParams).(acl.TokenParams).IsSupport
-	if !isAdmin {
-		respondWithError(c, http.StatusForbidden, fmt.Errorf("ТЫ НЕ ПРОЙДЕШЬ!!!")) // todo accept to all endpoints
-		return
-	}
+	//isAdmin := c.Request.Context().Value(acl.CtxNameTokenParams).(acl.TokenParams).IsSupport
+	//if !isAdmin {
+	//	respondWithError(c, http.StatusForbidden, fmt.Errorf("ТЫ НЕ ПРОЙДЕШЬ!!!")) // todo accept to all endpoints
+	//	return
+	//}
 	req := userRequest.UserListReq{
 		Pagination: userRequest.Pagination{
 			Order: "name asc",
@@ -110,11 +109,11 @@ func (r *adminUserRoutes) GetUserInfo(c *gin.Context) {
 func (r *adminUserRoutes) CreateUser(c *gin.Context) {
 	var req userRequest.CreateUserReq
 
-	ctx := c.Request.Context()
-	tokenParams := ctx.Value(acl.CtxNameTokenParams).(acl.TokenParams)
-	req.CreateUser = tokenParams.Username
-	req.UpdateUser = tokenParams.Username
-	req.Enabled = true
+	//ctx := c.Request.Context()
+	//tokenParams := ctx.Value(acl.CtxNameTokenParams).(acl.TokenParams)
+	//req.CreateUser = tokenParams.Username
+	//req.UpdateUser = tokenParams.Username
+	//req.Enabled = true
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		respondWithError(c, http.StatusBadRequest, err)
@@ -143,10 +142,10 @@ func (r *adminUserRoutes) CreateUser(c *gin.Context) {
 func (r *adminUserRoutes) UpdateUser(c *gin.Context) {
 	var req userRequest.UpdateUserReq
 
-	ctx := c.Request.Context()
-	tokenParams := ctx.Value(acl.CtxNameTokenParams).(acl.TokenParams)
-
-	req.UpdateName = tokenParams.Username
+	//ctx := c.Request.Context()
+	//tokenParams := ctx.Value(acl.CtxNameTokenParams).(acl.TokenParams)
+	//
+	//req.UpdateName = tokenParams.Username
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		respondWithError(c, http.StatusBadRequest, err)

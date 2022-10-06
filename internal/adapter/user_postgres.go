@@ -4,15 +4,15 @@ import (
 	"context"
 	"fmt"
 	"github.com/Masterminds/squirrel"
+	entity "github.com/ev-go/Testing/internal/entity/user"
+	userRequest "github.com/ev-go/Testing/internal/entity/user/request"
 	"github.com/jackc/pgx/v4"
-	entity "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user"
-	userRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/request"
 	"time"
 
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/postgres"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
-	"gitlab.boquar.tech/galileosky/pkg/http_errors"
-	"net/http"
+	"github.com/ev-go/Testing/pkg/postgres"
+	"github.com/ev-go/Testing/pkg/tracer"
+	//"gitlab.boquar.tech/galileosky/pkg/http_errors"
+	//"net/http"
 )
 
 const _resultNotUpdate = "UPDATE 0"
@@ -434,7 +434,7 @@ and user_uuid in (
 	) as u
 )
 */
-func (r *UserRepoImpl) SetEnabledStatusUser(ctx context.Context, req userRequest.SetEnabledStatusUserReq, requestPermission string) (*string, *http_errors.RestError) {
+func (r *UserRepoImpl) SetEnabledStatusUser(ctx context.Context, req userRequest.SetEnabledStatusUserReq, requestPermission string) (*string, error) {
 	_, spn := tracer.Start(ctx, "SetEnabledStatusUser run")
 	defer tracer.End(spn)
 	/*	sqlStringPermission, err := acl.ACLRepo.GetPermissions(ctx, reqPermission)
@@ -461,28 +461,18 @@ func (r *UserRepoImpl) SetEnabledStatusUser(ctx context.Context, req userRequest
 	sql, args, err := q.ToSql()
 	sql = sql + " RETURNING username"
 	if err != nil {
-		return nil, &http_errors.RestError{
-			ErrStatus: http.StatusInternalServerError, // fixme какой статус???
-			ErrError:  fmt.Sprintf("adapter - SetEnabledStatusUser - r.Builder: %s", err),
-		}
+		return nil, err
 	}
 
 	var username string
 
 	err = r.Pool.QueryRow(ctx, sql, args...).Scan(&username)
 	if err != nil {
-		return &username, &http_errors.RestError{
-			ErrStatus: http.StatusInternalServerError,
-			ErrError:  fmt.Sprintf("adapter - SetEnabledStatusUser - r.Pool.Exec: %s", err),
-		}
+		return nil, err
 	}
 
 	if username == "" { //fixme изменить на err?
-		return &username, &http_errors.RestError{
-			ErrStatus: http.StatusNotFound, // fixme какой статус???
-			ErrError:  fmt.Sprintf("adapter - SetEnabledStatusUser - r.Builder: %s", username),
-			ErrCauses: "username not found",
-		}
+		return nil, err
 	}
 
 	return &username, nil

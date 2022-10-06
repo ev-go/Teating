@@ -3,8 +3,8 @@ package middleware
 import (
 	"errors"
 	"fmt"
+	"github.com/ev-go/Testing/pkg/tracer"
 	"github.com/gin-gonic/gin"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 )

@@ -2,13 +2,13 @@ package usecase
 
 import (
 	"context"
-	groupRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/group/request"
-	entity "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user"
-	userRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/request"
-	"gitlab.boquar.tech/galileosky/pkg/http_errors"
+	groupRequest "github.com/ev-go/Testing/internal/entity/group/request"
+	entity "github.com/ev-go/Testing/internal/entity/user"
+	userRequest "github.com/ev-go/Testing/internal/entity/user/request"
+	//"gitlab.boquar.tech/galileosky/pkg/http_errors"
 
-	customerRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/request"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/response"
+	customerRequest "github.com/ev-go/Testing/internal/entity/customer/request"
+	"github.com/ev-go/Testing/internal/entity/customer/response"
 )
 
 type (
@@ -71,7 +71,7 @@ type (
 		//GetUserInfoPublic(ctx context.Context, userId string, requestPermission string) (res entity.UserInfo, err error)
 		CreateUser(ctx context.Context, req userRequest.CreateUserReq) error
 		UpdateUser(ctx context.Context, req userRequest.UpdateUserReq) (err error)
-		SetEnabledStatusUser(ctx context.Context, req userRequest.SetEnabledStatusUserReq, requestPermission string) (*string, *http_errors.RestError)
+		SetEnabledStatusUser(ctx context.Context, req userRequest.SetEnabledStatusUserReq, requestPermission string) (*string, error)
 		GetCustomerUUIDByUserName(ctx context.Context, userName string) (string, error)
 	}
 

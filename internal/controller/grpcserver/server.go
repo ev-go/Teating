@@ -3,11 +3,11 @@ package grpcserver
 import (
 	"context"
 	"fmt"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/request"
+	"github.com/ev-go/Testing/internal/entity/customer/request"
 	"net"
 
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/usecase"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
+	"github.com/ev-go/Testing/internal/usecase"
+	"github.com/ev-go/Testing/pkg/tracer"
 	"google.golang.org/grpc"
 )
 

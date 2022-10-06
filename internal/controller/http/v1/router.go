@@ -2,10 +2,10 @@ package v1
 
 import (
 	"github.com/VictoriaMetrics/metrics"
+	"github.com/ev-go/Testing/internal/controller/http/middleware"
+	"github.com/ev-go/Testing/internal/usecase"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/controller/http/middleware"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/usecase"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -38,7 +38,7 @@ func NewRouter(handler *gin.Engine, c usecase.ICustomer, g usecase.IGroup, u use
 
 	handler.Use(
 		//middleware.CORSMiddleware(),
-		middleware.ACLMiddleware,
+		//middleware.ACLMiddleware,
 		middleware.TracerMiddleware,
 		middleware.MetricsMiddleware,
 		middleware.LoggerMiddleware,

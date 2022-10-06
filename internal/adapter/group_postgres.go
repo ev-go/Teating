@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 	"github.com/Masterminds/squirrel"
+	"github.com/ev-go/Testing/internal/entity/customer/response"
+	groupRequest "github.com/ev-go/Testing/internal/entity/group/request"
+	"github.com/ev-go/Testing/pkg/postgres"
+	"github.com/ev-go/Testing/pkg/tracer"
 	"github.com/jackc/pgx/v4"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/response"
-	groupRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/group/request"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/postgres"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
 )
 
 type GroupRepoImpl struct {

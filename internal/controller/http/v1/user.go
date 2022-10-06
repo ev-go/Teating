@@ -2,10 +2,10 @@ package v1
 
 import (
 	"encoding/json"
+	userRequest "github.com/ev-go/Testing/internal/entity/user/request"
+	uResp "github.com/ev-go/Testing/internal/entity/user/user/response"
+	"github.com/ev-go/Testing/internal/usecase"
 	"github.com/gin-gonic/gin"
-	userRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/request"
-	uResp "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/user/user/response"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/usecase"
 	"gitlab.boquar.tech/galileosky/pkg/acl"
 	"net/http"
 )

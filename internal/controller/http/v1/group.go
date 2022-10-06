@@ -3,9 +3,9 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 
-	groupRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/group/request"
+	groupRequest "github.com/ev-go/Testing/internal/entity/group/request"
 
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/usecase"
+	"github.com/ev-go/Testing/internal/usecase"
 	"net/http"
 )
 

@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/response"
-	request2 "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/group/request"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/pkg/tracer"
+	"github.com/ev-go/Testing/internal/entity/customer/response"
+	request2 "github.com/ev-go/Testing/internal/entity/group/request"
+	"github.com/ev-go/Testing/pkg/tracer"
 	"gitlab.boquar.tech/galileosky/pkg/acl"
 )
 

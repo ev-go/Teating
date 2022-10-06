@@ -1,9 +1,9 @@
 package v1
 
 import (
+	customerRequest "github.com/ev-go/Testing/internal/entity/customer/request"
+	"github.com/ev-go/Testing/internal/usecase"
 	"github.com/gin-gonic/gin"
-	customerRequest "gitlab.boquar.tech/galileosky/device/customer-administration/internal/entity/customer/request"
-	"gitlab.boquar.tech/galileosky/device/customer-administration/internal/usecase"
 	"net/http"
 )
 
